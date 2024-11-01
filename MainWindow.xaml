@@ -22,16 +22,24 @@
                  Margin="0,0,-200,10"
                  Text = "Enter Max Volume"/>
         <Button Grid.Row = "0" Width="20" Height="20"
-                Margin="0,0,-600,10"
+                Margin="0,0,500,10"
             Click="AddInputPair_Click"
                 Content="+"/>
         <Button Grid.Row = "0" Width="100" Height="20"
-                Margin="0,0,600,10"
+                Margin="0,0,650,10"
                 Click="CalculateButton_Click"
                 Content="Calculate"/>
         <Button Grid.Row = "0" Width="20" Height="20"
-                Margin="0,0,-650,10"
+                Margin="0,0,450,10"
                 Click="RemoveButtonPair_Click"
                 Content="-"/>
+        <Button Grid.Row = "0" Width="40" Height="20"
+                Margin="500,0,0,10"
+                Click="SavePresetButton_Click"
+                Content="Save"/>
+        <Button Grid.Row = "0" Width="40" Height="20"
+                Margin="600,0,0,10"
+                Click="LoadPresetButton_Click"
+                Content="Load"/>
     </Grid>
 </Window>

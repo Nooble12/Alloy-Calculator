@@ -2,31 +2,31 @@ namespace TerraFirmaCraftCalc;
 
 public class MetalRatio
 {
-    private string name;
-    private int numberOfBars;
-    private float barPercent;
-    private int totalBarVolume;
+    private readonly string _name;
+    private readonly int _numberOfBars;
+    private float _barPercent;
+    private readonly int _totalBarVolume;
 
     public MetalRatio(string inName, int inNumberOfBars, float inBarPercent, int inTotalBarVolume)
     {
-        name = inName;
-        numberOfBars = inNumberOfBars;
-        barPercent = inBarPercent;
-        totalBarVolume = inTotalBarVolume;
+        _name = inName;
+        _numberOfBars = inNumberOfBars;
+        _barPercent = inBarPercent;
+        _totalBarVolume = inTotalBarVolume;
     }
 
     public int GetTotalBarVolume()
     {
-        return totalBarVolume;
+        return _totalBarVolume;
     }
 
     public void SetIngotPercentage(float inPercent)
     {
-        barPercent = inPercent;
+        _barPercent = inPercent;
     }
 
-    public string ToString()
+    public override string ToString()
     {
-        return name + ": " + "\n" + "Number of Bar: " + numberOfBars + "\n" + "Percent: " + barPercent + "%" + "\n" + "Volume: " + totalBarVolume + "mb" + "\n";
+        return _name + ": " + "\n" + "Number of Bar: " + _numberOfBars + "\n" + "Percent: " + _barPercent + "%" + "\n" + "Volume: " + _totalBarVolume + "mb" + "\n";
     }
 }

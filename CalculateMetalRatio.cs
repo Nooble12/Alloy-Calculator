@@ -5,52 +5,52 @@ namespace TerraFirmaCraftCalc;
 
 public class CalculateMetalRatio
 {
-    private List<Metal> metalList = new List<Metal>();
-    private List<MetalRatio> metalRatioList = new List<MetalRatio>();
-    private int maxVolume;
-    private int barVolume = 144; //milibuckets
-    private int totalBarVolume;
-    private bool checkFailed = false;
+    private readonly List<Metal> _metalList;
+    private readonly List<MetalRatio> _metalRatioList = new List<MetalRatio>();
+    private readonly int _maxVolume;
+    private readonly int _singleBarVolume = 144; //mili buckets
+    private int _totalBarVolume;
+    private bool _checkFailed;
     
     public CalculateMetalRatio(List<Metal> inMetalList, int inMaxVolume)
     {
-        metalList = inMetalList;
-        maxVolume = inMaxVolume;
+        _metalList = inMetalList;
+        _maxVolume = inMaxVolume;
         CalculateRatios();
     }
 
     private float GetIngotPercentage(int indivBarVolume)
     {
-        return (float)indivBarVolume / totalBarVolume * 100;
+        return (float)indivBarVolume / _totalBarVolume * 100;
     }
     
     private void CalculateRatios()
     {
-        totalBarVolume = 0;
-        for (int i = 0; i < metalList.Count; i++)
+        _totalBarVolume = 0;
+        for (int i = 0; i < _metalList.Count; i++)
         {
-            float metalAmount = maxVolume * metalList[i].GetAverageMetalPercentage() / 100;
+            float metalAmount = _maxVolume * _metalList[i].AveragePercent / 100;
             
-            int barAmount = (int)Math.Floor(metalAmount / barVolume);
+            int barAmount = (int)Math.Floor(metalAmount / _singleBarVolume);
             
-            int volumeOfSingleBarType = barAmount * barVolume;
+            int volumeOfSingleBarType = barAmount * _singleBarVolume;
             
-            totalBarVolume += volumeOfSingleBarType;
+            _totalBarVolume += volumeOfSingleBarType;
             
-            metalRatioList.Add(new MetalRatio(metalList[i].GetMetalName(), barAmount, 0, volumeOfSingleBarType));
+            _metalRatioList.Add(new MetalRatio(_metalList[i].Name, barAmount, 0, volumeOfSingleBarType));
         }
         
-        for (int i = 0; i < metalRatioList.Count; i++)
+        for (int i = 0; i < _metalRatioList.Count; i++)
         {
-            int volumeOfSingleBarType = metalRatioList[i].GetTotalBarVolume();
+            int volumeOfSingleBarType = _metalRatioList[i].GetTotalBarVolume();
             float percentage = GetIngotPercentage(volumeOfSingleBarType);
-            if (percentage >= metalList[i].GetMinMetalPercentage() && percentage <= metalList[i].GetMaxMetalPercentage())
+            if (percentage >= _metalList[i].MinPercentage && percentage <= _metalList[i].MaxPercentage)
             {
-                metalRatioList[i].SetIngotPercentage(percentage);   
+                _metalRatioList[i].SetIngotPercentage(percentage);   
             }
             else
             {
-                checkFailed = true;
+                _checkFailed = true;
                 Console.WriteLine("Could not find combination of metal ratio");
             }
         }
@@ -59,17 +59,17 @@ public class CalculateMetalRatio
     public override string ToString()
     {
         StringBuilder builder = new StringBuilder();
-        if (checkFailed == false)
+        if (_checkFailed == false)
         {
-            for (int i = 0; i < metalRatioList.Count; i++)
+            for (int i = 0; i < _metalRatioList.Count; i++)
             {
-                builder.Append(metalRatioList[i].ToString() + "\n");
+                builder.Append(_metalRatioList[i].ToString() + "\n");
             }
-            builder.Append("Total Volume: " + totalBarVolume + "mb");   
+            builder.Append("Total Volume: " + _totalBarVolume + "mb");   
         }
 
         // Append failure message if checkFailed is true
-        if (checkFailed)
+        if (_checkFailed)
         {
             builder.Append("\nWarning: Could not find combination of metal ratio.");
         }

@@ -16,11 +16,11 @@ namespace TerraFirmaCraftCalc;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private static int currentRow = 0;
-    private List<Metal> metalInputs = new List<Metal>();
-    private List<TextBox> metalMaxPercentTextBoxes = new List<TextBox>();
-    private List<TextBox> metalMinPercentTextBoxes = new List<TextBox>();
-    private List<TextBox> metalNameTextBoxes = new List<TextBox>();
+    private static int _currentRow = 0;
+    private readonly List<TextBox> _metalMaxPercentTextBoxes = new List<TextBox>();
+    private readonly List<TextBox> _metalMinPercentTextBoxes = new List<TextBox>();
+    private readonly List<TextBox> _metalNameTextBoxes = new List<TextBox>();
+    private bool passCheck = false;
     
     public MainWindow()
     {
@@ -29,27 +29,28 @@ public partial class MainWindow : Window
 
     private void AddInputPair_Click(object sender, RoutedEventArgs e)
     {
-        RowDefinition newRow = new RowDefinition();
-        newRow.Height = new GridLength(1, GridUnitType.Auto);
-        MainGrid.RowDefinitions.Add(newRow);
         AddTextBoxPairs();
     }
 
     private void AddTextBoxPairs()
     {
-        if (currentRow > 6)
+        RowDefinition newRow = new RowDefinition();
+        newRow.Height = new GridLength(1, GridUnitType.Auto);
+        MainGrid.RowDefinitions.Add(newRow);
+        
+        if (_currentRow > 6)
         {
             MessageBox.Show("Do you really need this many metals?");
             return;
         }
-        currentRow++;
+        _currentRow++;
         
         // Create new TextBox for Metal input
         TextBox newMetalTextBox = new TextBox();
         newMetalTextBox.Width = 200;
         newMetalTextBox.Text = "Enter Metal Name";
         newMetalTextBox.Margin = new Thickness(0, 0, 400, 10);
-        Grid.SetRow(newMetalTextBox, currentRow);
+        Grid.SetRow(newMetalTextBox, _currentRow);
         Grid.SetColumn(newMetalTextBox, 1);
 
         // Create new TextBox for Metal Percent input
@@ -57,14 +58,14 @@ public partial class MainWindow : Window
         newMinimumMetalPercentTextBox.Width = 200;
         newMinimumMetalPercentTextBox.Text = "Enter Minimum Metal Percent";
         newMinimumMetalPercentTextBox.Margin = new Thickness(0, 0, 0, 10);
-        Grid.SetRow(newMinimumMetalPercentTextBox, currentRow);
+        Grid.SetRow(newMinimumMetalPercentTextBox, _currentRow);
         Grid.SetColumn(newMinimumMetalPercentTextBox, 1);
         
         TextBox newMaximumMetalPercentTextBox = new TextBox();
         newMaximumMetalPercentTextBox.Width = 200;
         newMaximumMetalPercentTextBox.Text = "Enter Maximum Metal Percent";
         newMaximumMetalPercentTextBox.Margin = new Thickness(400, 0, 0, 10);
-        Grid.SetRow(newMaximumMetalPercentTextBox, currentRow);
+        Grid.SetRow(newMaximumMetalPercentTextBox, _currentRow);
         Grid.SetColumn(newMaximumMetalPercentTextBox, 1);
         
 
@@ -72,19 +73,16 @@ public partial class MainWindow : Window
         MainGrid.Children.Add(newMinimumMetalPercentTextBox);
         MainGrid.Children.Add(newMaximumMetalPercentTextBox);
         MainGrid.Children.Add(newMetalTextBox);
-
-        // Add the new Metal Percent TextBox to the list for later retrieval
-        //metalInputs.Add(new Metal(int.Parse(newMetalPercentTextBox.Text), newMetalTextBox.Text));
         
-        metalNameTextBoxes.Add(newMetalTextBox);
-        metalMaxPercentTextBoxes.Add(newMaximumMetalPercentTextBox);
-        metalMinPercentTextBoxes.Add(newMinimumMetalPercentTextBox);
+        _metalNameTextBoxes.Add(newMetalTextBox);
+        _metalMaxPercentTextBoxes.Add(newMaximumMetalPercentTextBox);
+        _metalMinPercentTextBoxes.Add(newMinimumMetalPercentTextBox);
     }
 
     private void RemoveButtonPair_Click(object sender, RoutedEventArgs e)
     {
         {
-            if (currentRow == 0)
+            if (_currentRow == 0)
             {
                 MessageBox.Show("Why are you trying to delete the first row? Please dont because you will need it. :)");
                 return;
@@ -92,7 +90,7 @@ public partial class MainWindow : Window
             
             var elementsToRemove = MainGrid.Children
                 .OfType<UIElement>()
-                .Where(el => Grid.GetRow(el) == currentRow)
+                .Where(el => Grid.GetRow(el) == _currentRow)
                 .ToList();
 
             foreach (var element in elementsToRemove)
@@ -100,33 +98,17 @@ public partial class MainWindow : Window
                 MainGrid.Children.Remove(element);
             }
 
-            metalMaxPercentTextBoxes.RemoveAt(currentRow - 1);
-            metalMinPercentTextBoxes.RemoveAt(currentRow - 1);
-            metalNameTextBoxes.RemoveAt(currentRow - 1);
-            currentRow--;
+            _metalMaxPercentTextBoxes.RemoveAt(_currentRow - 1);
+            _metalMinPercentTextBoxes.RemoveAt(_currentRow - 1);
+            _metalNameTextBoxes.RemoveAt(_currentRow - 1);
+            _currentRow--;
         }
     }
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
-        clearMetalInputList();
-        
-        for (int i = 0; i < metalNameTextBoxes.Count; i++)
-        {
-            if (float.TryParse(metalMaxPercentTextBoxes[i].Text, out float maxPercent) && float.TryParse(metalMinPercentTextBoxes[i].Text, out float minPercent))
-            {
-                string metalName = metalNameTextBoxes[i].Text;
-                float middlePercent = (maxPercent + minPercent) / 2;
-                metalInputs.Add(new (middlePercent, metalName, minPercent, maxPercent));   
-            }
-            else
-            {
-                MessageBox.Show("Error, invalid inputs. Percents must be int." + "\n" + "Check row " + (i + 1));
-            }
-        }
-
         if (int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
         {
-            CalculateMetalRatio ratios = new CalculateMetalRatio(metalInputs, maxVolume);
+            CalculateMetalRatio ratios = new CalculateMetalRatio(CreateMetalList(), maxVolume);
             MessageBox.Show( "Max Volume: " + MaxVolumeTextBox.Text + "mb" + "\n \n" + AlloyNameTextBox.Text + " \n \n" + ratios.ToString());
         }
         else
@@ -134,9 +116,87 @@ public partial class MainWindow : Window
             MessageBox.Show("Error, invalid max volume int.");
         }
     }
-    
-    private void clearMetalInputList()
+
+    private void SavePresetButton_Click(object sender, RoutedEventArgs e)
     {
-        metalInputs.Clear();
+        DataManager manager = new DataManager();
+        List<Metal> metals = new List<Metal>();
+        metals = CreateMetalList();
+        
+        if (passCheck && int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
+        {
+            manager.SerializeData(metals, AlloyNameTextBox.Text, maxVolume);
+            MessageBox.Show("Data Saved!");
+        }
+        else
+        {
+            MessageBox.Show("Error, Could not save data.");
+        }
+    }
+    
+    private void LoadPresetButton_Click(object sender, RoutedEventArgs e)
+    {
+        LoadFileMenu menu = new LoadFileMenu();
+        menu.ShowDialog();
+        
+        string selectedFile = menu.GetSelectedSaveFile();
+        if (string.IsNullOrEmpty(selectedFile))
+        {
+            return;
+        }
+        menu.Close();
+
+        // Deserialize the file content using the DataManager
+        DataManager manager = new DataManager();
+        PresetData loadedData = manager.DeserializeData(selectedFile);
+        
+        ClearUI();
+        AlloyNameTextBox.Text = loadedData.AlloyName;
+        MaxVolumeTextBox.Text = loadedData.MaximumVolume.ToString();
+        for (int i = 0; i < loadedData.Metals.Count; i++)
+        {
+            AddTextBoxPairs();
+            _metalNameTextBoxes[i].Text = loadedData.Metals[i].Name;
+            _metalMinPercentTextBoxes[i].Text = loadedData.Metals[i].MinPercentage.ToString();
+            _metalMaxPercentTextBoxes[i].Text = loadedData.Metals[i].MaxPercentage.ToString();
+        }
+
+        MessageBox.Show("Preset loaded successfully!");
+    }
+
+    private void ClearUI()
+    {
+        for (int i = _currentRow; i > 0; i--)
+        {
+            RemoveButtonPair_Click(null, null);  // Remove each row of TextBoxes
+        }
+        _currentRow = 0;
+    }
+
+    private List<Metal> CreateMetalList()
+    {
+        List<Metal> metalList = new List<Metal>();
+        bool hasInvalidInput = false; // Track if there are any invalid inputs
+
+        for (int i = 0; i < _metalNameTextBoxes.Count; i++)
+        {
+            if (float.TryParse(_metalMaxPercentTextBoxes[i].Text, out float maxPercent) && 
+                float.TryParse(_metalMinPercentTextBoxes[i].Text, out float minPercent))
+            {
+                // If inputs are valid, add to list
+                string metalName = _metalNameTextBoxes[i].Text;
+                float middlePercent = (maxPercent + minPercent) / 2;
+                metalList.Add(new Metal(middlePercent, metalName, minPercent, maxPercent));
+            }
+            else
+            {
+                hasInvalidInput = true; // Mark as having invalid input
+                MessageBox.Show("Error, invalid inputs. Percents must be float." + "\n" + "Check row " + (i + 1));
+            }
+        }
+
+        // Set passCheck based on the validity of the inputs
+        passCheck = !hasInvalidInput; // true if there are no invalid inputs
+        return metalList;
     }
 }

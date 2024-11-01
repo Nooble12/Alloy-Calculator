@@ -39,3 +39,5 @@ C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\refint
 C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.pdb
 C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.genruntimeconfig.cache
 C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\ref\TerraFirmaCraftCalc.dll
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\LoadFileMenu.g.cs
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\LoadFileMenu.baml

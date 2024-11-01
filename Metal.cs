@@ -1,44 +1,36 @@
-using System.Collections;
+using System.Xml.Serialization;
 
 namespace TerraFirmaCraftCalc;
 
 public class Metal
 {
-    private float averagePercent;
-    private float minPercentage;
-    private float maxPercentage;
-    private string name;
+    [XmlElement("AveragePercent")]
+    public float AveragePercent { get; set; }
+
+    [XmlElement("MinPercentage")]
+    public float MinPercentage { get; set; }
+
+    [XmlElement("MaxPercentage")]
+    public float MaxPercentage { get; set; }
+
+    [XmlElement("Name")]
+    public string Name { get; set; }
 
     public Metal(float inAveragePercent, string inMetalName, float inMinPercent, float inMaxPercent)
     {
-        averagePercent = inAveragePercent;
-        minPercentage = inMinPercent;
-        maxPercentage = inMaxPercent;
-        name = inMetalName;
+        AveragePercent = inAveragePercent;
+        MinPercentage = inMinPercent;
+        MaxPercentage = inMaxPercent;
+        Name = inMetalName;
     }
 
-    public string GetMetalName()
+    // Parameterless constructor for serialization
+    public Metal() 
     {
-        return name;
     }
 
-    public float GetAverageMetalPercentage()
+    public override string ToString()
     {
-        return averagePercent;
-    }
-    
-    public float GetMinMetalPercentage()
-    {
-        return minPercentage;
-    }
-    
-    public float GetMaxMetalPercentage()
-    {
-        return maxPercentage;
-    }
-
-    public string ToString()
-    {
-        return "Metal: " + name + ", " + "Percent: " + averagePercent;
+        return $"Metal: {Name}, Percent: {AveragePercent}";
     }
 }
