@@ -14,32 +14,27 @@ public class DataManager
         
         if (!Directory.Exists(saveFolder))
         {
-                Directory.CreateDirectory(saveFolder);
-        }
+            Directory.CreateDirectory(saveFolder);
+        } 
+        string filePath = Path.Combine(saveFolder, alloyName + ".xml"); 
+        PresetData alloyData = new PresetData(alloyName, inMetals, inMaxVolume);
         
-            string filePath = Path.Combine(saveFolder, alloyName + ".xml");
-        
-            // Create an AlloyData object
-            PresetData alloyData = new PresetData(alloyName, inMetals, inMaxVolume);
-        
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(PresetData));
-            using (FileStream fs = new FileStream(filePath, FileMode.Create))
-            {
-                xmlSerializer.Serialize(fs, alloyData);
-            }
-            Console.WriteLine("Saved " + alloyName + " to " + saveFolder);
-        }
-
-        public PresetData DeserializeData(string inFilePath)
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(PresetData));
+        using (FileStream fs = new FileStream(filePath, FileMode.Create))
         {
-            PresetData deserializedAlloyData;
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(PresetData));
-            using (FileStream fs = new FileStream(inFilePath, FileMode.Open))
-            {
-                deserializedAlloyData = (PresetData)xmlSerializer.Deserialize(fs);
-            }
-
-            return deserializedAlloyData;
+            xmlSerializer.Serialize(fs, alloyData);
         }
+    }
+
+    public PresetData DeserializeData(string inFilePath)
+    { 
+        PresetData deserializedAlloyData;
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(PresetData));
+        using (FileStream fs = new FileStream(inFilePath, FileMode.Open))
+        {
+            deserializedAlloyData = (PresetData)xmlSerializer.Deserialize(fs);
+        }
+
+        return deserializedAlloyData;
+    }
 }

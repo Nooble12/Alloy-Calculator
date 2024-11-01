@@ -168,7 +168,7 @@ public partial class MainWindow : Window
     {
         for (int i = _currentRow; i > 0; i--)
         {
-            RemoveButtonPair_Click(null, null);  // Remove each row of TextBoxes
+            RemoveButtonPair_Click(null, null); 
         }
         _currentRow = 0;
     }
@@ -176,7 +176,7 @@ public partial class MainWindow : Window
     private List<Metal> CreateMetalList()
     {
         List<Metal> metalList = new List<Metal>();
-        bool hasInvalidInput = false; // Track if there are any invalid inputs
+        bool hasInvalidInput = false; 
 
         for (int i = 0; i < _metalNameTextBoxes.Count; i++)
         {
@@ -190,13 +190,12 @@ public partial class MainWindow : Window
             }
             else
             {
-                hasInvalidInput = true; // Mark as having invalid input
+                hasInvalidInput = true;
                 MessageBox.Show("Error, invalid inputs. Percents must be float." + "\n" + "Check row " + (i + 1));
             }
         }
-
-        // Set passCheck based on the validity of the inputs
-        passCheck = !hasInvalidInput; // true if there are no invalid inputs
+        
+        passCheck = !hasInvalidInput;
         return metalList;
     }
 }

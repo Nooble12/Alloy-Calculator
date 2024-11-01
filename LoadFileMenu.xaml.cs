@@ -8,6 +8,7 @@ public partial class LoadFileMenu : Window
 {
     private string saveFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SaveFiles");
     private string selectedSaveFile = string.Empty;
+    private bool isInitializing; 
     public LoadFileMenu()
     {
         InitializeComponent();
@@ -17,7 +18,33 @@ public partial class LoadFileMenu : Window
             MessageBox.Show("SaveFiles folder does not exist.");
             return;
         }
+
         LoadFiles();
+    }
+    
+    private void searchBox_Changed(object sender, EventArgs e)
+    {
+        //Ignores the initial text changed on window start
+        if (SearchBox.Text.Equals("Search Here"))
+        {
+            return;
+        } 
+        DisplaySearchedFile(SearchBox.Text);
+    }
+
+    private void DisplaySearchedFile(String inSearch)
+    {
+        string[] files = Directory.GetFiles(saveFolderPath);
+        
+        FileListBox.Items.Clear();
+        
+        foreach (string file in files)
+        {
+            if (Path.GetFileName(file).IndexOf(inSearch, StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                FileListBox.Items.Add(Path.GetFileName(file));
+            }
+        }
     }
     
     private void LoadFiles()
