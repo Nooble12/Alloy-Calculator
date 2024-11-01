@@ -10,6 +10,7 @@ public class CalculateMetalRatio
     private int maxVolume;
     private int barVolume = 144; //milibuckets
     private int totalBarVolume;
+    private bool checkFailed = false;
     
     public CalculateMetalRatio(List<Metal> inMetalList, int inMaxVolume)
     {
@@ -22,18 +23,13 @@ public class CalculateMetalRatio
     {
         return (float)indivBarVolume / totalBarVolume * 100;
     }
-
-    private int GetNumberOfIngot(float metalAmount)
-    {
-        int barAmount = (int)Math.Floor(metalAmount / barVolume);
-        return barAmount;
-    }
+    
     private void CalculateRatios()
     {
         totalBarVolume = 0;
         for (int i = 0; i < metalList.Count; i++)
         {
-            float metalAmount = maxVolume * metalList[i].GetMetalPercentage() / 100;
+            float metalAmount = maxVolume * metalList[i].GetAverageMetalPercentage() / 100;
             
             int barAmount = (int)Math.Floor(metalAmount / barVolume);
             
@@ -48,17 +44,36 @@ public class CalculateMetalRatio
         {
             int volumeOfSingleBarType = metalRatioList[i].GetTotalBarVolume();
             float percentage = GetIngotPercentage(volumeOfSingleBarType);
-            metalRatioList[i].SetIngotPercentage(percentage);
+            if (percentage >= metalList[i].GetMinMetalPercentage() && percentage <= metalList[i].GetMaxMetalPercentage())
+            {
+                metalRatioList[i].SetIngotPercentage(percentage);   
+            }
+            else
+            {
+                checkFailed = true;
+                Console.WriteLine("Could not find combination of metal ratio");
+            }
         }
     }
 
-    public string ToString()
+    public override string ToString()
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < metalRatioList.Count; i++)
+        if (checkFailed == false)
         {
-            builder.Append(metalRatioList[i].ToString() + "\n" + "");
+            for (int i = 0; i < metalRatioList.Count; i++)
+            {
+                builder.Append(metalRatioList[i].ToString() + "\n");
+            }
+            builder.Append("Total Volume: " + totalBarVolume + "mb");   
         }
-        return builder.ToString() + "\n" + "Total Volume: " + totalBarVolume + "mb";
+
+        // Append failure message if checkFailed is true
+        if (checkFailed)
+        {
+            builder.Append("\nWarning: Could not find combination of metal ratio.");
+        }
+
+        return builder.ToString();
     }
 }

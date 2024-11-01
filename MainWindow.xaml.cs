@@ -18,7 +18,8 @@ public partial class MainWindow : Window
 {
     private static int currentRow = 0;
     private List<Metal> metalInputs = new List<Metal>();
-    private List<TextBox> metalPercentTextBoxes = new List<TextBox>();
+    private List<TextBox> metalMaxPercentTextBoxes = new List<TextBox>();
+    private List<TextBox> metalMinPercentTextBoxes = new List<TextBox>();
     private List<TextBox> metalNameTextBoxes = new List<TextBox>();
     
     public MainWindow()
@@ -47,27 +48,37 @@ public partial class MainWindow : Window
         TextBox newMetalTextBox = new TextBox();
         newMetalTextBox.Width = 200;
         newMetalTextBox.Text = "Enter Metal Name";
-        newMetalTextBox.Margin = new Thickness(0, 0, 200, 10);
+        newMetalTextBox.Margin = new Thickness(0, 0, 400, 10);
         Grid.SetRow(newMetalTextBox, currentRow);
         Grid.SetColumn(newMetalTextBox, 1);
 
         // Create new TextBox for Metal Percent input
-        TextBox newMetalPercentTextBox = new TextBox();
-        newMetalPercentTextBox.Width = 200;
-        newMetalPercentTextBox.Text = "Enter Metal Percent";
-        newMetalPercentTextBox.Margin = new Thickness(0, 0, -200, 10);
-        Grid.SetRow(newMetalPercentTextBox, currentRow);
-        Grid.SetColumn(newMetalPercentTextBox, 1);
+        TextBox newMinimumMetalPercentTextBox = new TextBox();
+        newMinimumMetalPercentTextBox.Width = 200;
+        newMinimumMetalPercentTextBox.Text = "Enter Minimum Metal Percent";
+        newMinimumMetalPercentTextBox.Margin = new Thickness(0, 0, 0, 10);
+        Grid.SetRow(newMinimumMetalPercentTextBox, currentRow);
+        Grid.SetColumn(newMinimumMetalPercentTextBox, 1);
+        
+        TextBox newMaximumMetalPercentTextBox = new TextBox();
+        newMaximumMetalPercentTextBox.Width = 200;
+        newMaximumMetalPercentTextBox.Text = "Enter Maximum Metal Percent";
+        newMaximumMetalPercentTextBox.Margin = new Thickness(400, 0, 0, 10);
+        Grid.SetRow(newMaximumMetalPercentTextBox, currentRow);
+        Grid.SetColumn(newMaximumMetalPercentTextBox, 1);
+        
 
         // Add the new Label and TextBox to the Grid
-        MainGrid.Children.Add(newMetalPercentTextBox);
+        MainGrid.Children.Add(newMinimumMetalPercentTextBox);
+        MainGrid.Children.Add(newMaximumMetalPercentTextBox);
         MainGrid.Children.Add(newMetalTextBox);
 
         // Add the new Metal Percent TextBox to the list for later retrieval
         //metalInputs.Add(new Metal(int.Parse(newMetalPercentTextBox.Text), newMetalTextBox.Text));
         
         metalNameTextBoxes.Add(newMetalTextBox);
-        metalPercentTextBoxes.Add(newMetalPercentTextBox);
+        metalMaxPercentTextBoxes.Add(newMaximumMetalPercentTextBox);
+        metalMinPercentTextBoxes.Add(newMinimumMetalPercentTextBox);
     }
 
     private void RemoveButtonPair_Click(object sender, RoutedEventArgs e)
@@ -89,7 +100,8 @@ public partial class MainWindow : Window
                 MainGrid.Children.Remove(element);
             }
 
-            metalPercentTextBoxes.RemoveAt(currentRow - 1);
+            metalMaxPercentTextBoxes.RemoveAt(currentRow - 1);
+            metalMinPercentTextBoxes.RemoveAt(currentRow - 1);
             metalNameTextBoxes.RemoveAt(currentRow - 1);
             currentRow--;
         }
@@ -97,12 +109,14 @@ public partial class MainWindow : Window
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         clearMetalInputList();
+        
         for (int i = 0; i < metalNameTextBoxes.Count; i++)
         {
-            if (float.TryParse(metalPercentTextBoxes[i].Text, out float percentage))
+            if (float.TryParse(metalMaxPercentTextBoxes[i].Text, out float maxPercent) && float.TryParse(metalMinPercentTextBoxes[i].Text, out float minPercent))
             {
                 string metalName = metalNameTextBoxes[i].Text;
-                metalInputs.Add(new (percentage, metalName));   
+                float middlePercent = (maxPercent + minPercent) / 2;
+                metalInputs.Add(new (middlePercent, metalName, minPercent, maxPercent));   
             }
             else
             {
@@ -113,14 +127,14 @@ public partial class MainWindow : Window
         if (int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
         {
             CalculateMetalRatio ratios = new CalculateMetalRatio(metalInputs, maxVolume);
-            MessageBox.Show( "Max Volume: " + MaxVolumeTextBox.Text + "mb" + "\n \n" + AlloyNameTextBox.Text + "\n" + ratios.ToString());
+            MessageBox.Show( "Max Volume: " + MaxVolumeTextBox.Text + "mb" + "\n \n" + AlloyNameTextBox.Text + " \n \n" + ratios.ToString());
         }
         else
         {
             MessageBox.Show("Error, invalid max volume int.");
         }
     }
-
+    
     private void clearMetalInputList()
     {
         metalInputs.Clear();

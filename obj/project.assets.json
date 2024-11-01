@@ -8,19 +8,19 @@
     "net8.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\timch\\.nuget\\packages\\": {}
+    "C:\\Users\\Tim Tran\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\timch\\RiderProjects\\TerraFirmaCraftCalc\\TerraFirmaCraftCalc\\TerraFirmaCraftCalc.csproj",
+      "projectUniqueName": "C:\\Users\\Tim Tran\\RiderProjects\\Alloy-Calculator\\TerraFirmaCraftCalc.csproj",
       "projectName": "TerraFirmaCraftCalc",
-      "projectPath": "C:\\Users\\timch\\RiderProjects\\TerraFirmaCraftCalc\\TerraFirmaCraftCalc\\TerraFirmaCraftCalc.csproj",
-      "packagesPath": "C:\\Users\\timch\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\timch\\RiderProjects\\TerraFirmaCraftCalc\\TerraFirmaCraftCalc\\obj\\",
+      "projectPath": "C:\\Users\\Tim Tran\\RiderProjects\\Alloy-Calculator\\TerraFirmaCraftCalc.csproj",
+      "packagesPath": "C:\\Users\\Tim Tran\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tim Tran\\RiderProjects\\Alloy-Calculator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\timch\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Tim Tran\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
@@ -38,6 +38,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -62,7 +67,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\timch\\.dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

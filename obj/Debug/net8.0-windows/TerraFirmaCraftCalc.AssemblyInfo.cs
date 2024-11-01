@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TerraFirmaCraftCalc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d81dad456f44fa62c2797709c899c206d1af2e17")]
 [assembly: System.Reflection.AssemblyProductAttribute("TerraFirmaCraftCalc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TerraFirmaCraftCalc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

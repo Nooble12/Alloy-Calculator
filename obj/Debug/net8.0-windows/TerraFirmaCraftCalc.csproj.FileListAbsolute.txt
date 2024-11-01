@@ -18,3 +18,24 @@ C:\Users\timch\RiderProjects\TerraFirmaCraftCalc\TerraFirmaCraftCalc\obj\Debug\n
 C:\Users\timch\RiderProjects\TerraFirmaCraftCalc\TerraFirmaCraftCalc\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.pdb
 C:\Users\timch\RiderProjects\TerraFirmaCraftCalc\TerraFirmaCraftCalc\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.genruntimeconfig.cache
 C:\Users\timch\RiderProjects\TerraFirmaCraftCalc\TerraFirmaCraftCalc\obj\Debug\net8.0-windows\ref\TerraFirmaCraftCalc.dll
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\bin\Debug\net8.0-windows\TerraFirmaCraftCalc.exe
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\bin\Debug\net8.0-windows\TerraFirmaCraftCalc.deps.json
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\bin\Debug\net8.0-windows\TerraFirmaCraftCalc.runtimeconfig.json
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\bin\Debug\net8.0-windows\TerraFirmaCraftCalc.dll
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\bin\Debug\net8.0-windows\TerraFirmaCraftCalc.pdb
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc_MarkupCompile.cache
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc_MarkupCompile.lref
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.g.resources
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.AssemblyInfoInputs.cache
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.AssemblyInfo.cs
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.csproj.CoreCompileInputs.cache
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.sourcelink.json
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.dll
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\refint\TerraFirmaCraftCalc.dll
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.pdb
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\TerraFirmaCraftCalc.genruntimeconfig.cache
+C:\Users\Tim Tran\RiderProjects\Alloy-Calculator\obj\Debug\net8.0-windows\ref\TerraFirmaCraftCalc.dll

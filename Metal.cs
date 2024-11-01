@@ -4,12 +4,16 @@ namespace TerraFirmaCraftCalc;
 
 public class Metal
 {
-    private float percentage;
+    private float averagePercent;
+    private float minPercentage;
+    private float maxPercentage;
     private string name;
 
-    public Metal(float inPercentage, string inMetalName)
+    public Metal(float inAveragePercent, string inMetalName, float inMinPercent, float inMaxPercent)
     {
-        percentage = inPercentage;
+        averagePercent = inAveragePercent;
+        minPercentage = inMinPercent;
+        maxPercentage = inMaxPercent;
         name = inMetalName;
     }
 
@@ -18,13 +22,23 @@ public class Metal
         return name;
     }
 
-    public float GetMetalPercentage()
+    public float GetAverageMetalPercentage()
     {
-        return percentage;
+        return averagePercent;
+    }
+    
+    public float GetMinMetalPercentage()
+    {
+        return minPercentage;
+    }
+    
+    public float GetMaxMetalPercentage()
+    {
+        return maxPercentage;
     }
 
     public string ToString()
     {
-        return "Metal: " + name + ", " + "Percent: " + percentage;
+        return "Metal: " + name + ", " + "Percent: " + averagePercent;
     }
 }
