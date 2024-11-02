@@ -10,7 +10,7 @@
         Title="MainMenu" Height="450" Width="800">
     <Grid>
         <Label
-            Content="TerraFirmaCraft Alloy Calculator"
+            Content="TerraFirmaGreg Alloy Calculator"
             Foreground="White"
             FontSize="40"
             HorizontalAlignment="Center"
