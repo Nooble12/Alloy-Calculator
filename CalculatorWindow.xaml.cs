@@ -14,7 +14,7 @@ namespace TerraFirmaCraftCalc;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class CalculatorWindow : Window
 {
     private static int _currentRow = 0;
     private readonly List<TextBox> _metalMaxPercentTextBoxes = new List<TextBox>();
@@ -22,7 +22,7 @@ public partial class MainWindow : Window
     private readonly List<TextBox> _metalNameTextBoxes = new List<TextBox>();
     private bool _passCheck = false;
     
-    public MainWindow()
+    public CalculatorWindow()
     {
         InitializeComponent();
     }
@@ -87,37 +87,45 @@ public partial class MainWindow : Window
 
     private void RemoveButtonPair_Click(object sender, RoutedEventArgs e)
     {
+        RemoveButtonPairs();
+    }
+
+    private void RemoveButtonPairs()
+    {
+        if (_currentRow == 0)
         {
-            if (_currentRow == 0)
-            {
-                return;
-            }
-            
-            var elementsToRemove = MainGrid.Children
-                .OfType<UIElement>()
-                .Where(el => Grid.GetRow(el) == _currentRow)
-                .ToList();
-
-            foreach (var element in elementsToRemove)
-            {
-                MainGrid.Children.Remove(element);
-            }
-
-            _metalMaxPercentTextBoxes.RemoveAt(_currentRow - 1);
-            _metalMinPercentTextBoxes.RemoveAt(_currentRow - 1);
-            _metalNameTextBoxes.RemoveAt(_currentRow - 1);
-            _currentRow--;
+            return;
         }
+            
+        var elementsToRemove = MainGrid.Children
+            .OfType<UIElement>()
+            .Where(el => Grid.GetRow(el) == _currentRow)
+            .ToList();
+
+        foreach (var element in elementsToRemove)
+        {
+            MainGrid.Children.Remove(element);
+        }
+
+        _metalMaxPercentTextBoxes.RemoveAt(_currentRow - 1);
+        _metalMinPercentTextBoxes.RemoveAt(_currentRow - 1);
+        _metalNameTextBoxes.RemoveAt(_currentRow - 1);
+        _currentRow--;
     }
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         if (int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
         {
             CalculateMetalRatio ratios = new CalculateMetalRatio(CreateMetalList(), maxVolume);
-            MessageBox.Show( "Max Volume: " + MaxVolumeTextBox.Text + "mb" + "\n \n" + AlloyNameTextBox.Text + " \n \n" + ratios.ToString());
+            MaxVolumeTextBox.BorderBrush = new SolidColorBrush(Colors.Gray);
+            if (_passCheck)
+            {
+                MessageBox.Show( "Max Volume: " + MaxVolumeTextBox.Text + "mb" + "\n \n" + AlloyNameTextBox.Text + " \n \n" + ratios.ToString());   
+            }
         }
         else
         {
+            MaxVolumeTextBox.BorderBrush = new SolidColorBrush(Colors.Red);
             MessageBox.Show("Error, invalid max volume int.");
         }
     }
@@ -173,7 +181,7 @@ public partial class MainWindow : Window
     {
         for (int i = _currentRow; i > 0; i--)
         {
-            RemoveButtonPair_Click(null, null); 
+            RemoveButtonPairs();
         }
         _currentRow = 0;
     }
@@ -181,25 +189,35 @@ public partial class MainWindow : Window
     private List<Metal> CreateMetalList()
     {
         List<Metal> metalList = new List<Metal>();
-        bool hasInvalidInput = false; 
+        bool hasInvalidInput = false;
+        StringBuilder errorMessages = new StringBuilder();
 
         for (int i = 0; i < _metalNameTextBoxes.Count; i++)
         {
             if (float.TryParse(_metalMaxPercentTextBoxes[i].Text, out float maxPercent) && 
                 float.TryParse(_metalMinPercentTextBoxes[i].Text, out float minPercent))
             {
-                // If inputs are valid, add to list
                 string metalName = _metalNameTextBoxes[i].Text;
                 float middlePercent = (maxPercent + minPercent) / 2;
                 metalList.Add(new Metal(middlePercent, metalName, minPercent, maxPercent));
+
+                // Reset border color if valid
+                _metalMaxPercentTextBoxes[i].BorderBrush = new SolidColorBrush(Colors.Gray);
+                _metalMinPercentTextBoxes[i].BorderBrush = new SolidColorBrush(Colors.Gray);
             }
             else
             {
                 hasInvalidInput = true;
-                MessageBox.Show("Error, invalid inputs. Percents must be float." + "\n" + "Check row " + (i + 1));
+                _metalMaxPercentTextBoxes[i].BorderBrush = new SolidColorBrush(Colors.Red);
+                _metalMinPercentTextBoxes[i].BorderBrush = new SolidColorBrush(Colors.Red);
+                errorMessages.AppendLine($"Error on row {i + 1}: Invalid percentages. Enter valid integers.");
             }
         }
-        
+
+        if (hasInvalidInput)
+        {
+            MessageBox.Show(errorMessages.ToString());
+        }
         _passCheck = !hasInvalidInput;
         return metalList;
     }

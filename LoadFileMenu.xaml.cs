@@ -91,7 +91,8 @@ public partial class LoadFileMenu : Window
         try
         {
             // Open the SaveFiles directory in the default file explorer
-            System.Diagnostics.Process.Start("explorer.exe", saveFolderPath);
+            Close();
+            System.Diagnostics.Process.Start("explorer.exe", saveFolderPath); 
         }
         catch (Exception ex)
         {

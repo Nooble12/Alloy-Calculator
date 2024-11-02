@@ -29,15 +29,15 @@ public class CalculateMetalRatio
         _totalBarVolume = 0;
         for (int i = 0; i < _metalList.Count; i++)
         {
-            float metalAmount = _maxVolume * _metalList[i].AveragePercent / 100;
+            float metalVolume = _maxVolume * _metalList[i].AveragePercent / 100;
             
-            int barAmount = (int)Math.Floor(metalAmount / _singleBarVolume);
+            int barAmount = (int)Math.Floor(metalVolume / _singleBarVolume);
             
-            int volumeOfSingleBarType = barAmount * _singleBarVolume;
+            int totalVolumeOfSingleBarType = barAmount * _singleBarVolume;
             
-            _totalBarVolume += volumeOfSingleBarType;
+            _totalBarVolume += totalVolumeOfSingleBarType;
             
-            _metalRatioList.Add(new MetalRatio(_metalList[i].Name, barAmount, 0, volumeOfSingleBarType));
+            _metalRatioList.Add(new MetalRatio(_metalList[i].Name, barAmount, 0, totalVolumeOfSingleBarType));
         }
         
         for (int i = 0; i < _metalRatioList.Count; i++)
@@ -66,6 +66,7 @@ public class CalculateMetalRatio
                 builder.Append(_metalRatioList[i].ToString() + "\n");
             }
             builder.Append("Total Volume: " + _totalBarVolume + "mb");   
+            builder.Append("\nTotal Ingot Output: " + GetTotalBarCount());
         }
 
         // Append failure message if checkFailed is true
@@ -73,7 +74,11 @@ public class CalculateMetalRatio
         {
             builder.Append("\nWarning: Could not find combination of metal ratio.");
         }
-
         return builder.ToString();
+    }
+
+    private int GetTotalBarCount()
+    {
+        return _totalBarVolume / _singleBarVolume;
     }
 }
