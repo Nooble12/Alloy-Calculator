@@ -18,7 +18,6 @@ public partial class LoadFileMenu : Window
             MessageBox.Show("SaveFiles folder does not exist.");
             return;
         }
-
         LoadFiles();
     }
     
@@ -32,15 +31,15 @@ public partial class LoadFileMenu : Window
         DisplaySearchedFile(SearchBox.Text);
     }
 
-    private void DisplaySearchedFile(String inSearch)
+    private void DisplaySearchedFile(String targetSearch)
     {
-        string[] files = Directory.GetFiles(saveFolderPath);
+        string[] fileArray = Directory.GetFiles(saveFolderPath);
         
         FileListBox.Items.Clear();
         
-        foreach (string file in files)
+        foreach (string file in fileArray)
         {
-            if (Path.GetFileName(file).IndexOf(inSearch, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (Path.GetFileName(file).IndexOf(targetSearch, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 FileListBox.Items.Add(Path.GetFileName(file));
             }
@@ -79,12 +78,24 @@ public partial class LoadFileMenu : Window
         {
             MessageBox.Show($"Failed to load file: {ex.Message}");
         }
-        
         Close();
     }
 
     public string GetSelectedSaveFile()
     {
         return selectedSaveFile;
+    }
+    
+    private void OpenDirectoryButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // Open the SaveFiles directory in the default file explorer
+            System.Diagnostics.Process.Start("explorer.exe", saveFolderPath);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to open directory: {ex.Message}");
+        }
     }
 }

@@ -20,7 +20,7 @@ public partial class MainWindow : Window
     private readonly List<TextBox> _metalMaxPercentTextBoxes = new List<TextBox>();
     private readonly List<TextBox> _metalMinPercentTextBoxes = new List<TextBox>();
     private readonly List<TextBox> _metalNameTextBoxes = new List<TextBox>();
-    private bool passCheck = false;
+    private bool _passCheck = false;
     
     public MainWindow()
     {
@@ -46,25 +46,31 @@ public partial class MainWindow : Window
         _currentRow++;
         
         // Create new TextBox for Metal input
-        TextBox newMetalTextBox = new TextBox();
-        newMetalTextBox.Width = 200;
-        newMetalTextBox.Text = "Enter Metal Name";
-        newMetalTextBox.Margin = new Thickness(0, 0, 400, 10);
+        TextBox newMetalTextBox = new TextBox
+        {
+            Width = 200,
+            Text = "Enter Metal Name",
+            Margin = new Thickness(0, 0, 400, 10)
+        };
         Grid.SetRow(newMetalTextBox, _currentRow);
         Grid.SetColumn(newMetalTextBox, 1);
 
         // Create new TextBox for Metal Percent input
-        TextBox newMinimumMetalPercentTextBox = new TextBox();
-        newMinimumMetalPercentTextBox.Width = 200;
-        newMinimumMetalPercentTextBox.Text = "Enter Minimum Metal Percent";
-        newMinimumMetalPercentTextBox.Margin = new Thickness(0, 0, 0, 10);
+        TextBox newMinimumMetalPercentTextBox = new TextBox
+        {
+            Width = 200,
+            Text = "Enter Minimum Metal Percent",
+            Margin = new Thickness(0, 0, 0, 10)
+        };
         Grid.SetRow(newMinimumMetalPercentTextBox, _currentRow);
         Grid.SetColumn(newMinimumMetalPercentTextBox, 1);
         
-        TextBox newMaximumMetalPercentTextBox = new TextBox();
-        newMaximumMetalPercentTextBox.Width = 200;
-        newMaximumMetalPercentTextBox.Text = "Enter Maximum Metal Percent";
-        newMaximumMetalPercentTextBox.Margin = new Thickness(400, 0, 0, 10);
+        TextBox newMaximumMetalPercentTextBox = new TextBox
+        {
+            Width = 200,
+            Text = "Enter Maximum Metal Percent",
+            Margin = new Thickness(400, 0, 0, 10)
+        };
         Grid.SetRow(newMaximumMetalPercentTextBox, _currentRow);
         Grid.SetColumn(newMaximumMetalPercentTextBox, 1);
         
@@ -84,7 +90,6 @@ public partial class MainWindow : Window
         {
             if (_currentRow == 0)
             {
-                MessageBox.Show("Why are you trying to delete the first row? Please dont because you will need it. :)");
                 return;
             }
             
@@ -123,7 +128,7 @@ public partial class MainWindow : Window
         List<Metal> metals = new List<Metal>();
         metals = CreateMetalList();
         
-        if (passCheck && int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
+        if (_passCheck && int.TryParse(MaxVolumeTextBox.Text, out int maxVolume))
         {
             manager.SerializeData(metals, AlloyNameTextBox.Text, maxVolume);
             MessageBox.Show("Data Saved!");
@@ -195,7 +200,7 @@ public partial class MainWindow : Window
             }
         }
         
-        passCheck = !hasInvalidInput;
+        _passCheck = !hasInvalidInput;
         return metalList;
     }
 }

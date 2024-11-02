@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Load File" Height="300" Width="400">
     <Grid>
-        <ListBox x:Name="FileListBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20"/>
+        <ListBox x:Name="FileListBox" 
+                 HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" 
+                 Margin="20"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        </ListBox> 
         
         <Button Content="Load Selected File" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"
                 Width="150" Click="LoadFileButton_Click"/>
+        
+        <Button Content="File Explorer" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"
+                Width="100" Click="OpenDirectoryButton_Click"/>
         <TextBox
             Name="SearchBox"
             TextChanged="searchBox_Changed"

@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:TerraFirmaCraftCalc"
         mc:Ignorable="d"
         Background="Gray"
-        Title="Alloy Calculator" Height="450" Width="800">
+        Title="Alloy Calculator" Height="450" Width="800"
+        ResizeMode="CanResize"
+        MinHeight="360">
     <Grid Margin="20" Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -36,7 +38,8 @@
         <Button Grid.Row = "0" Width="40" Height="20"
                 Margin="500,0,0,10"
                 Click="SavePresetButton_Click"
-                Content="Save"/>
+                Content="Save"
+                />
         <Button Grid.Row = "0" Width="40" Height="20"
                 Margin="600,0,0,10"
                 Click="LoadPresetButton_Click"
